@@ -9,5 +9,7 @@ namespace Project.Model.Common
         Guid Id { get; set; }
         string Name { get; set; }
         string Abrv { get; set; }
+        IList<IVehicleModel> VehicleModels { get; set; }
+
     }
 }

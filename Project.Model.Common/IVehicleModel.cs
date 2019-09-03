@@ -10,5 +10,6 @@ namespace Project.Model.Common
         string Name { get; set; }
         string Abrv { get; set; }
         Guid VehicleMakeId { get; set; }
+        IVehicleMake VehicleMake { get; set; }
     }
 }

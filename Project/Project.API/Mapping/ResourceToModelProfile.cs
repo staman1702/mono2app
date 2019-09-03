@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Project.API.Resources;
 using Project.Model;
 using AutoMapper;
-
+using Project.Model.Common;
 
 namespace Project.API.Mapping
 {
@@ -15,6 +15,8 @@ namespace Project.API.Mapping
         {
             CreateMap<SaveVehicleMakeResource, VehicleMake>();
             CreateMap<SaveVehicleModelResource, VehicleModel>();
+            CreateMap<SaveVehicleMakeResource, IVehicleMake>();
+            CreateMap<SaveVehicleModelResource, IVehicleModel>();
         }
     }
 }

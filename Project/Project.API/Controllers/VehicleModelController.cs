@@ -27,6 +27,7 @@ namespace Project.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<VehicleModelResource>), 200)]
         public async Task<IEnumerable<VehicleModelResource>> ListAsync()
         {
             var vehicleModels = await _vehicleModelService.ListAllAsync();

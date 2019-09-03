@@ -8,6 +8,6 @@ namespace Project.Model
     public class VehicleModel : Vehicle, IVehicleModel
     {
         public Guid VehicleMakeId { get; set; }
-        public VehicleMake VehicleMake { get; set; }
+        public IVehicleMake VehicleMake { get; set; }
     }
 }
