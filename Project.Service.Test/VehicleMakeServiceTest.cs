@@ -76,7 +76,7 @@ namespace Project.Service.Test
             mockRepo.Verify(x => x.AddMakeAsync(newMake), Times.Once());
 
             Assert.IsAssignableFrom<VehicleResponse<VehicleMake>>(result);
-
+            
             Assert.True(result.Success);
         }
 
@@ -103,11 +103,54 @@ namespace Project.Service.Test
             // Assert             
             mockRepo.Verify(x => x.FindMakeByIdAsync(Guid.Parse("2ca5ebe0-9b49-11e9-b475-1111200c9a99")), 
                 Times.Once());
-
+            Assert.Equal("TestWagen", result.Name);
             Assert.IsAssignableFrom<VehicleMake>(result);           
 
         }
 
+        [Fact]
+        public async Task UpdateAsync_Test()
+        {
+            // Arrange
+            var mockUoW = new Mock<IUnitOfWork>();
+            var testMake = new VehicleMake()
+            {
+                Id = Guid.Parse("2ca5ebe0-9b49-11e9-b475-1111200c9a99"),
+                Name = "TestWagen",
+                Abrv = "TW"
+            };
+
+            var updateMake = new VehicleMake()
+            {
+                Id = Guid.Parse("2ca5ebe0-9b49-11e9-b475-1111200c9a99"),
+                Name = "TestWagen2",
+                Abrv = "TW2"
+            };
+
+
+            var mockRepo = new Mock<IVehicleMakeRepository>();
+
+            mockRepo.Setup(repo => repo.FindMakeByIdAsync(Guid.Parse("2ca5ebe0-9b49-11e9-b475-1111200c9a99")))
+            .ReturnsAsync(testMake);
+            mockRepo.Setup(repo => repo.UpdateMakeAsync(testMake));
+
+            var makeService = new VehicleMakeService(mockRepo.Object, mockUoW.Object);
+
+            // Act
+            
+            var result = await makeService.UpdateAsync(Guid.Parse("2ca5ebe0-9b49-11e9-b475-1111200c9a99"), updateMake);
+
+            // Assert        
+            mockRepo.Verify(x => x.FindMakeByIdAsync(Guid.Parse("2ca5ebe0-9b49-11e9-b475-1111200c9a99")),
+                            Times.Once());
+            mockRepo.Verify(x => x.UpdateMakeAsync(testMake),
+                Times.Once());
+
+            Assert.IsAssignableFrom<VehicleResponse<VehicleMake>>(result);
+            Assert.Equal("TestWagen2", testMake.Name);
+            Assert.True(result.Success);
+
+        }
 
         [Fact]
         public async Task DeleteAsync_Test()
